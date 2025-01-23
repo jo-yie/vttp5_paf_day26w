@@ -38,7 +38,7 @@ public class GameController {
 
         try {
 
-            return ResponseEntity.ok().body(gameService.getResponse(limit, offset).toString());
+            return ResponseEntity.ok().header("Content-Type", "application/json").body(gameService.getResponse(limit, offset));
 
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());

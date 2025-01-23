@@ -45,7 +45,7 @@ public class GameService {
         for (Game g : games) {
 
             JsonObject jo = Json.createObjectBuilder()
-                                .add("game_id", g.getGame_id())
+                                .add("gid", g.getGid())
                                 .add("name", g.getName())
                                 .build();
 
