@@ -32,102 +32,33 @@ public class GameService {
 
     }
 
-    public int getNumberOfGames() { 
-        return gameRepo.getAllGames().size();
+    // TASK A
+    public GameResponse getResponse(int limit, int offset, boolean isRanked) {
 
-    }
+        List<Game> games = new ArrayList<>(); 
 
-    // public GameDetail documentToGame(Document document) {
+        if (!isRanked) {
 
-    //     GameDetail g = new GameDetail(); 
+            // unranked list
+            games = gameRepo.getGames(limit, offset);
 
-    //     g.set_id(document.get("_id").toString());
-    //     g.setName(document.getString("name"));
+        } else {
 
-    //     return g;
+            // ranked list
+            games = gameRepo.getGamesRanked(limit, offset);
 
-    // }
-
-    // public List<GameDetail> gamesToDocuments(List<Document> documents) {
-
-    //     List<GameDetail> games = new ArrayList<>();
-
-    //     for (Document d : documents) {
-
-    //         GameDetail g = documentToGame(d);
-
-    //         games.add(g);
-
-    //     }
-
-    //     return games;
-
-    // }
-
-    public GameResponse getTest(int limit, int offset) {
-
-        List<Game> games = gameRepo.getGames(limit, offset);
+        }
 
         GameResponse g = new GameResponse(); 
 
         g.setGames(games);
         g.setOffset(offset);
         g.setLimit(limit);
-
-        int total = (int) gameRepo.getNumberOfGames().intValue();
-        g.setTotal(total);
+        g.setTotal(gameRepo.getNumberOfGames());
 
         return g;
 
     }
-
-    // // TASK A + B
-    // public JsonObject getResponse(int limit, int offset, boolean isRanked) {
-
-    //     List<Document> documents = new ArrayList<>(); 
-    //     List<GameDetail> games = new ArrayList<>(); 
-
-    //     // unranked normal list
-    //     if (!isRanked) {
-
-    //         documents = gameRepo.getGames(limit, offset); 
-    //         games = gamesToDocuments(documents);
-
-    //     } else {
-
-    //         // isRanked == true 
-    //         // ranked list
-    //         documents = gameRepo.getGamesRanked(limit, offset);
-    //         games = gamesToDocuments(documents);
-
-    //     }
-
-    //     JsonArrayBuilder jab = Json.createArrayBuilder();
-
-    //     for (GameDetail g : games) {
-
-    //         JsonObject jo = Json.createObjectBuilder()
-    //                             .add("game_id", g.get_id())
-    //                             .add("name", g.getName())
-    //                             .build();
-
-    //         jab.add(jo);
-
-    //     }
-
-    //     String timestamp = LocalDateTime.now().toString();
-
-    //     JsonObject jo = Json.createObjectBuilder()
-    //                         .add("games",jab)
-    //                         .add("offset", offset)
-    //                         .add("limit", limit)
-    //                         .add("total", getNumberOfGames())
-    //                         .add("timestamp", timestamp)
-    //                         .build();
-
-    //     return jo;
-
-    // }
 
     // TASK C 
     public GameDetail getGameById(String id) { 

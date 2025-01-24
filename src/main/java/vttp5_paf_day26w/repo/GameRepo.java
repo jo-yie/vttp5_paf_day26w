@@ -34,13 +34,12 @@ public class GameRepo {
     /*
         db.games.count({})
      */
-    public Long getNumberOfGames() { 
+    public int getNumberOfGames() { 
 
-        return template.count(new Query(), C_GAMES);
+        return (int) template.count(new Query(), C_GAMES);
 
     }
     
-
     // TASK A 
     /*
         db.games.find({})
@@ -63,7 +62,7 @@ public class GameRepo {
         })
         .sort( { ranking : 1})
      */
-    public List<Document> getGamesRanked(int limit, int offset) {
+    public List<Game> getGamesRanked(int limit, int offset) {
 
         Criteria criteria = Criteria.where(F_RANKING).exists(true);
 
@@ -72,7 +71,7 @@ public class GameRepo {
             .limit(limit)
             .skip(offset);
         
-        return template.find(query, Document.class, C_GAMES);
+        return template.find(query, Game.class, C_GAMES);
 
     }
 
