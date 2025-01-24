@@ -1,8 +1,8 @@
 package vttp5_paf_day26w.repo;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -81,12 +81,15 @@ public class GameRepo {
             _id : ObjectId(<object_id>)
         })
      */
-    public GameDetail getGameById(String id) {
+    public Optional<GameDetail> getGameById(String id) {
 
         Criteria criteria = Criteria.where(F_ID).is(id);
         Query query = new Query().addCriteria(criteria);
 
-        return template.findOne(query, GameDetail.class, C_GAMES);
+        Optional<GameDetail> gameDetail = Optional.ofNullable
+            (template.findOne(query, GameDetail.class, C_GAMES));
+
+        return gameDetail;
 
     }
 

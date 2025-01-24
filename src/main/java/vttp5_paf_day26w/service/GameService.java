@@ -3,6 +3,7 @@ package vttp5_paf_day26w.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.BsonValue;
 import org.bson.Document;
@@ -61,7 +62,7 @@ public class GameService {
     }
 
     // TASK C 
-    public GameDetail getGameById(String id) { 
+    public Optional<GameDetail> getGameById(String id) { 
 
         return gameRepo.getGameById(id);
 

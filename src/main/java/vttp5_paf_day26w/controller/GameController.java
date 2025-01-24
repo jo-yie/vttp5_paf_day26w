@@ -2,9 +2,14 @@ package vttp5_paf_day26w.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import vttp5_paf_day26w.model.GameDetail;
 import vttp5_paf_day26w.service.GameService;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,9 +77,21 @@ public class GameController {
     @GetMapping("/game/{game_id}")
     public ResponseEntity<Object> getGameById(@PathVariable String game_id) {
 
-        return ResponseEntity.ok()
-            .header("Content-Type", "application/json")
-            .body(gameService.getGameById(game_id));
+        Optional<GameDetail> gameDetail = gameService.getGameById(game_id);
+
+        try {
+
+            return ResponseEntity.ok()
+                .header("Content-Type", "application/json")
+                .body(gameDetail.get());
+
+        } catch (Exception c) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .header("Content-Type", "application/json")
+                .body(Map.of("Error", "Game ID not found"));
+
+        }
 
     }
     
