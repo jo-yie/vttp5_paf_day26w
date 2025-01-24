@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class GameDetail {
 
     @Field("_id")

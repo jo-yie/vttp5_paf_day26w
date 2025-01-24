@@ -16,7 +16,9 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
+import vttp5_paf_day26w.model.Game;
 import vttp5_paf_day26w.model.GameDetail;
+import vttp5_paf_day26w.model.GameResponse;
 import vttp5_paf_day26w.repo.GameRepo;
 
 @Service
@@ -62,9 +64,20 @@ public class GameService {
 
     // }
 
-    public List<GameDetail> getTest(int limit, int offset) {
+    public GameResponse getTest(int limit, int offset) {
 
-        return gameRepo.getGames(limit, offset);
+        List<Game> games = gameRepo.getGames(limit, offset);
+
+        GameResponse g = new GameResponse(); 
+
+        g.setGames(games);
+        g.setOffset(offset);
+        g.setLimit(limit);
+
+        int total = (int) gameRepo.getNumberOfGames().intValue();
+        g.setTotal(total);
+
+        return g;
 
     }
 

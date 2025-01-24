@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import vttp5_paf_day26w.model.Game;
 import vttp5_paf_day26w.model.GameDetail;
 import static vttp5_paf_day26w.repo.Constants.*;
 
@@ -33,7 +34,7 @@ public class GameRepo {
     /*
         db.games.count({})
      */
-    public long getNumberOfGames() { 
+    public Long getNumberOfGames() { 
 
         return template.count(new Query(), C_GAMES);
 
@@ -46,12 +47,12 @@ public class GameRepo {
                 .limit(25)
                 .skip(0)
      */
-    public List<GameDetail> getGames(int limit, int offset) {
+    public List<Game> getGames(int limit, int offset) {
 
         Query query = new Query().limit(limit).skip(offset);
-        List<GameDetail> gameDetails = template.find(query, GameDetail.class, C_GAMES);
+        List<Game> games = template.find(query, Game.class, C_GAMES);
 
-        return gameDetails;
+        return games;
 
     }
 
