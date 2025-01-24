@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.JsonValue;
 import vttp5_paf_day26w.model.Game;
 import vttp5_paf_day26w.repo.GameRepo;
 
@@ -34,16 +37,24 @@ public class GameService {
 
     }
 
-    public List<Game> gameToDocument(List<Document> documents) {
+    public Game documentToGame(Document document) {
+
+        Game g = new Game(); 
+
+        g.set_id(document.get("_id").toString());
+        g.setName(document.getString("name"));
+
+        return g;
+
+    }
+
+    public List<Game> gamesToDocuments(List<Document> documents) {
 
         List<Game> games = new ArrayList<>();
 
         for (Document d : documents) {
 
-            Game g = new Game(); 
-
-            g.setGid(d.getInteger("gid"));
-            g.setName(d.getString("name"));
+            Game g = documentToGame(d);
 
             games.add(g);
 
@@ -63,14 +74,14 @@ public class GameService {
         if (!isRanked) {
 
             documents = gameRepo.getGames(limit, offset); 
-            games = gameToDocument(documents);
+            games = gamesToDocuments(documents);
 
         } else {
 
             // isRanked == true 
             // ranked list
             documents = gameRepo.getGamesRanked(limit, offset);
-            games = gameToDocument(documents);
+            games = gamesToDocuments(documents);
 
         }
 
@@ -79,7 +90,7 @@ public class GameService {
         for (Game g : games) {
 
             JsonObject jo = Json.createObjectBuilder()
-                                .add("gid", g.getGid())
+                                .add("game_id", g.get_id())
                                 .add("name", g.getName())
                                 .build();
 
@@ -96,6 +107,27 @@ public class GameService {
                             .add("total", getNumberOfGames())
                             .add("timestamp", timestamp)
                             .build();
+
+        return jo;
+
+    }
+
+    // TASK C 
+    public JsonObject getGameById(String id) { 
+
+        Document document = gameRepo.getGameById(id);
+
+        String timestamp = LocalDateTime.now().toString();
+
+        JsonObject jo = Json.createObjectBuilder()
+            .add("game_id", document.get("_id").toString())
+            .add("year", document.getInteger("year"))
+            .add("ranking", document.getInteger("ranking"))
+            .add("users_rated", document.getInteger("users_rated"))
+            .add("url", document.getString("url"))
+            .add("thumbnail", document.getString("image"))
+            .add("timestamp", timestamp)
+            .build();
 
         return jo;
 

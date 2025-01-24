@@ -6,26 +6,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Game {
 
-    @Field("gid")
-    private int gid; 
-
-    @JsonProperty("name")
+    private String _id; 
     private String name;
+    private int year; 
+    private int ranking; 
+    private int users_rated;
+    private String url; 
+    private String image; 
 
     public Game() {
     }
 
-    public Game(int gid, String name) {
-        this.gid = gid;
-        this.name = name;
+    public String get_id() {
+        return _id;
     }
 
-    public int getGid() {
-        return gid;
-    }
-
-    public void setGid(int gid) {
-        this.gid = gid;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -35,5 +32,47 @@ public class Game {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
+    public int getUsers_rated() {
+        return users_rated;
+    }
+
+    public void setUsers_rated(int users_rated) {
+        this.users_rated = users_rated;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    
     
 }

@@ -7,6 +7,7 @@ import vttp5_paf_day26w.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -66,5 +67,15 @@ public class GameController {
 
     }
     
+    // TASK C
+    // GET /game/<game_id>
+    @GetMapping("/game/{game_id}")
+    public ResponseEntity<Object> getGameById(@PathVariable String game_id) {
+
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/json")
+            .body(gameService.getGameById(game_id).toString());
+
+    }
     
 }

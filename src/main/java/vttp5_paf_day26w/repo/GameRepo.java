@@ -64,4 +64,20 @@ public class GameRepo {
 
     }
 
+    // TASK C 
+    /*
+        db.games.find({
+            _id : ObjectId(<object_id>)
+        })
+     */
+    public Document getGameById(String id) {
+
+        Criteria criteria = Criteria.where(F_ID).is(id);
+
+        Query query = new Query().addCriteria(criteria);
+
+        return template.findOne(query, Document.class, C_GAMES);
+
+    }
+
 }

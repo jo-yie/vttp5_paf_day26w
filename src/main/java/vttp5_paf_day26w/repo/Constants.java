@@ -5,5 +5,7 @@ public class Constants {
     public static final String C_GAMES = "games";
 
     public static final String F_RANKING = "ranking";
+
+    public static final String F_ID = "_id";
     
 }
