@@ -38,7 +38,9 @@ public class GameController {
 
         try {
 
-            return ResponseEntity.ok().header("Content-Type", "application/json").body(gameService.getResponse(limit, offset));
+            return ResponseEntity.ok()
+                .header("Content-Type", "application/json")
+                .body(gameService.getResponse(limit, offset, false).toString());
 
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());
@@ -52,7 +54,15 @@ public class GameController {
     public ResponseEntity<Object> getGamesByRank(@RequestParam(name="limit", defaultValue = "25") int limit, 
                                                     @RequestParam(name="offset", defaultValue = "0") int offset) {
 
-        return ResponseEntity.ok().body(gameService.getGamesRanked(limit, offset)); 
+        try {
+
+            return ResponseEntity.ok()
+                .header("Content-Type", "application/json")
+                .body(gameService.getResponse(limit, offset, true).toString());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
 
     }
     

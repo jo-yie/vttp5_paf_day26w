@@ -1,10 +1,14 @@
 package vttp5_paf_day26w.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
@@ -30,17 +34,47 @@ public class GameService {
 
     }
 
-    public List<Game> getGames(int limit, int offset) {
+    public List<Game> gameToDocument(List<Document> documents) {
 
-        return gameRepo.getGames(limit, offset);
+        List<Game> games = new ArrayList<>();
+
+        for (Document d : documents) {
+
+            Game g = new Game(); 
+
+            g.setGid(d.getInteger("gid"));
+            g.setName(d.getString("name"));
+
+            games.add(g);
+
+        }
+
+        return games;
 
     }
 
-    // TASK A
-    public JsonObject getResponse(int limit, int offset) {
+    // TASK A + B
+    public JsonObject getResponse(int limit, int offset, boolean isRanked) {
+
+        List<Document> documents = new ArrayList<>(); 
+        List<Game> games = new ArrayList<>(); 
+
+        // unranked normal list
+        if (!isRanked) {
+
+            documents = gameRepo.getGames(limit, offset); 
+            games = gameToDocument(documents);
+
+        } else {
+
+            // isRanked == true 
+            // ranked list
+            documents = gameRepo.getGamesRanked(limit, offset);
+            games = gameToDocument(documents);
+
+        }
 
         JsonArrayBuilder jab = Json.createArrayBuilder();
-        List<Game> games = getGames(limit, offset);
 
         for (Game g : games) {
 
@@ -64,13 +98,6 @@ public class GameService {
                             .build();
 
         return jo;
-
-    }
-
-    // TASK B
-    public List<Game> getGamesRanked(int limit, int offset) {
-
-        return gameRepo.getGamesRanked(limit, offset);
 
     }
     

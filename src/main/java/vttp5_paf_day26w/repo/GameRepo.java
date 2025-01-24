@@ -35,10 +35,12 @@ public class GameRepo {
                 .limit(25)
                 .skip(0)
      */
-    public List<Game> getGames(int limit, int offset) {
+    public List<Document> getGames(int limit, int offset) {
 
         Query query = new Query().limit(limit).skip(offset);
-        return template.find(query, Game.class, C_GAMES);
+        List<Document> documents = template.find(query, Document.class, C_GAMES);
+
+        return documents;
 
     }
 
@@ -49,7 +51,7 @@ public class GameRepo {
         })
         .sort( { ranking : 1})
      */
-    public List<Game> getGamesRanked(int limit, int offset) {
+    public List<Document> getGamesRanked(int limit, int offset) {
 
         Criteria criteria = Criteria.where(F_RANKING).exists(true);
 
@@ -58,9 +60,8 @@ public class GameRepo {
             .limit(limit)
             .skip(offset);
         
-        return template.find(query, Game.class, C_GAMES);
+        return template.find(query, Document.class, C_GAMES);
 
     }
-
 
 }
