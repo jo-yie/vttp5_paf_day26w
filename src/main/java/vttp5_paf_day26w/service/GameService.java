@@ -1,22 +1,12 @@
 package vttp5_paf_day26w.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.BsonValue;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.json.Json;
-import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
-import jakarta.json.JsonValue;
 import vttp5_paf_day26w.model.Game;
 import vttp5_paf_day26w.model.GameDetail;
 import vttp5_paf_day26w.model.GameResponse;
