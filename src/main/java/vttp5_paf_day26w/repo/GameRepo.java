@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import vttp5_paf_day26w.model.Game;
+import vttp5_paf_day26w.model.GameDetail;
 import static vttp5_paf_day26w.repo.Constants.*;
 
 @Repository
@@ -22,12 +22,23 @@ public class GameRepo {
     /*
         db.games.find({})
      */
-    public List<Game> getAllGames() { 
+    public List<GameDetail> getAllGames() { 
 
-        Query query = new Query(); 
-        return template.find(query, Game.class, C_GAMES);
+        Query query = new Query()
+            .limit(10); 
+        return template.find(query, GameDetail.class, C_GAMES);
 
     }
+
+    /*
+        db.games.count({})
+     */
+    public long getNumberOfGames() { 
+
+        return template.count(new Query(), C_GAMES);
+
+    }
+    
 
     // TASK A 
     /*
@@ -35,12 +46,12 @@ public class GameRepo {
                 .limit(25)
                 .skip(0)
      */
-    public List<Document> getGames(int limit, int offset) {
+    public List<GameDetail> getGames(int limit, int offset) {
 
         Query query = new Query().limit(limit).skip(offset);
-        List<Document> documents = template.find(query, Document.class, C_GAMES);
+        List<GameDetail> gameDetails = template.find(query, GameDetail.class, C_GAMES);
 
-        return documents;
+        return gameDetails;
 
     }
 
@@ -70,13 +81,12 @@ public class GameRepo {
             _id : ObjectId(<object_id>)
         })
      */
-    public Document getGameById(String id) {
+    public GameDetail getGameById(String id) {
 
         Criteria criteria = Criteria.where(F_ID).is(id);
-
         Query query = new Query().addCriteria(criteria);
 
-        return template.findOne(query, Document.class, C_GAMES);
+        return template.findOne(query, GameDetail.class, C_GAMES);
 
     }
 

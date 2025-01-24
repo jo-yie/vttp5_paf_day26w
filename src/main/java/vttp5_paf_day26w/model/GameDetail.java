@@ -1,28 +1,36 @@
 package vttp5_paf_day26w.model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Game {
+public class GameDetail {
 
-    private String _id; 
+    @Field("_id")
+    private String game_id; 
     private String name;
     private int year; 
     private int ranking; 
     private int users_rated;
     private String url; 
-    private String image; 
 
-    public Game() {
+    @Field("image")
+    private String thumbnail; 
+
+    private String timestamp;
+
+    public GameDetail() {
+        this.timestamp = LocalDateTime.now().toString();
     }
 
-    public String get_id() {
-        return _id;
+    public String getGame_id() {
+        return game_id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setGame_id(String game_id) {
+        this.game_id = game_id;
     }
 
     public String getName() {
@@ -65,14 +73,20 @@ public class Game {
         this.url = url;
     }
 
-    public String getImage() {
-        return image;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
-    
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
     
 }

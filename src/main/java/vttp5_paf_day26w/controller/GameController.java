@@ -41,7 +41,7 @@ public class GameController {
 
             return ResponseEntity.ok()
                 .header("Content-Type", "application/json")
-                .body(gameService.getResponse(limit, offset, false).toString());
+                .body(gameService.getTest(limit, offset));
 
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());
@@ -49,23 +49,23 @@ public class GameController {
         }
     }
 
-    // TASK B 
-    // GET /games/rank
-    @GetMapping("/games/rank")
-    public ResponseEntity<Object> getGamesByRank(@RequestParam(name="limit", defaultValue = "25") int limit, 
-                                                    @RequestParam(name="offset", defaultValue = "0") int offset) {
+    // // TASK B 
+    // // GET /games/rank
+    // @GetMapping("/games/rank")
+    // public ResponseEntity<Object> getGamesByRank(@RequestParam(name="limit", defaultValue = "25") int limit, 
+    //                                                 @RequestParam(name="offset", defaultValue = "0") int offset) {
 
-        try {
+    //     try {
 
-            return ResponseEntity.ok()
-                .header("Content-Type", "application/json")
-                .body(gameService.getResponse(limit, offset, true).toString());
+    //         return ResponseEntity.ok()
+    //             .header("Content-Type", "application/json")
+    //             .body(gameService.getResponse(limit, offset, true).toString());
 
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(404).body(e.getMessage());
+    //     }
 
-    }
+    // }
     
     // TASK C
     // GET /game/<game_id>
@@ -74,7 +74,7 @@ public class GameController {
 
         return ResponseEntity.ok()
             .header("Content-Type", "application/json")
-            .body(gameService.getGameById(game_id).toString());
+            .body(gameService.getGameById(game_id));
 
     }
     
